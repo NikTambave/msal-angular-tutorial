@@ -34,7 +34,7 @@ import {
   MsalInterceptor,
 } from '@azure/msal-angular';
 
-const GRAPH_ENDPOINT = 'https://graph.microsoft.com/1.0/me';
+const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE ') > -1 ||
@@ -67,7 +67,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
 
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
-  protectedResourceMap.set(GRAPH_ENDPOINT, ['user.read']);
+  protectedResourceMap.set(GRAPH_ENDPOINT, ['user.read','api://mail-proxy/ReadMail']);
 
   return {
     interactionType: InteractionType.Redirect,
@@ -79,7 +79,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
     interactionType: InteractionType.Redirect,
     authRequest: {
-      scopes: ['user.read'],
+      scopes: ['user.read','api://mail-proxy/ReadMail'],
     },
   };
 }
