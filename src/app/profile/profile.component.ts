@@ -24,11 +24,21 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getProfile();
+    this.getactivity();
   }
 
   getProfile() {
     this.http.get(GRAPH_ENDPOINT)
       .subscribe(profile => {
+        this.profile = profile;
+      });
+  }
+
+  getactivity(){
+    debugger;
+    this.http.get('https://www.boredapi.com/api/activity')
+      .subscribe(profile => {
+        debugger;
         this.profile = profile;
       });
   }
