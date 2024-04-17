@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MsalService } from '@azure/msal-angular';
 
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
@@ -19,12 +20,13 @@ export class ProfileComponent implements OnInit {
   profile!: ProfileType;
 
   constructor(
+    private authService: MsalService,
     private http: HttpClient
   ) { }
 
   ngOnInit() {
     this.getProfile();
-    this.getactivity();
+    this.getAccessToken();
   }
 
   getProfile() {
@@ -41,5 +43,19 @@ export class ProfileComponent implements OnInit {
         debugger;
         this.profile = profile;
       });
+  }
+
+  async getAccessToken(){
+debugger;
+var request = {
+  scopes: ['api://mail-proxy/ReadMail'],
+};
+
+this.authService.acquireTokenSilent(request).subscribe(tokenResponse => {
+  // Do something with the tokenResponse
+  debugger;
+  console.log(tokenResponse.accessToken);
+});
+
   }
 }
